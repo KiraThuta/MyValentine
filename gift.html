@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIN Lock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffebee;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            background-color: #f48fb1;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .image-box {
+            width: 150px;
+            height: 150px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .pin-section {
+            width: 100%;
+            text-align: center;
+        }
+
+        .display {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            width: 140px;
+            margin: 15px auto;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .key {
+            background: white;
+            border: none;
+            padding: 18px;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .key:hover {
+            background: #f06292;
+            color: white;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .clear {
+            background: #e57373;
+            color: white;
+        }
+
+        .enter {
+            background: #4caf50;
+            color: white;
+        }
+
+        /* Falling Hearts Animation */
+        .heart {
+            position: absolute;
+            top: -10vh; /* Start from above the screen */
+            color: red;
+            font-size: 20px;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(110vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="image-box">
+            <img src="mygf.jpg" alt="User Image">
+        </div>
+
+        <div class="pin-section">
+            <h2>Enter LoveCode</h2>
+            <div class="display" id="pinDisplay">••••</div>
+            <div class="keypad">
+                <button class="key" onclick="addDigit(1)">1</button>
+                <button class="key" onclick="addDigit(2)">2</button>
+                <button class="key" onclick="addDigit(3)">3</button>
+                <button class="key" onclick="addDigit(4)">4</button>
+                <button class="key" onclick="addDigit(5)">5</button>
+                <button class="key" onclick="addDigit(6)">6</button>
+                <button class="key" onclick="addDigit(7)">7</button>
+                <button class="key" onclick="addDigit(8)">8</button>
+                <button class="key" onclick="addDigit(9)">9</button>
+                <button class="key clear" onclick="clearPin()">C</button>
+                <button class="key" onclick="addDigit(0)">0</button>
+                <button class="key enter" onclick="checkPin()">✔</button>
+            </div>
+            <p class="error" id="errorMessage"></p>
+        </div>
+    </div>
+
+    <script>
+        let pin = "";
+        const correctPin = "19123";
+
+        function addDigit(digit) {
+            if (pin.length < 5) {
+                pin += digit;
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById("pinDisplay").innerText = pin.padEnd(5, "•");
+            document.getElementById("errorMessage").innerText = "";
+        }
+
+        function clearPin() {
+            pin = "";
+            updateDisplay();
+        }
+
+        function checkPin() {
+            if (pin === correctPin) {
+                window.location.href = "success.html";
+            } else {
+                document.getElementById("errorMessage").innerText = "❌ Incorrect PIN!";
+                clearPin();
+            }
+        }
+
+        // Function to create falling hearts
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.classList.add("heart");
+            heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s"; // Vary falling speed
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        // Generate hearts every 300ms
+        setInterval(createHeart, 300);
+    </script>
+
+</body>
+</html>

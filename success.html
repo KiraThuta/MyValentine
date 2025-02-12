@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Clock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffebee;
+            margin: 0;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4081;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .elapsed-time {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            font-size: 30px;
+            color: #000000;
+            position: relative;
+            z-index: 2;
+        }
+
+        .elapsed-time div {
+            text-align: center;
+        }
+
+        .clock-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+            min-width: 70px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .clock-box:hover {
+            transform: scale(1.1);
+            box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .clock-unit {
+            font-size: 32px;
+            font-weight: bold;
+            color: #ff4081;
+        }
+
+        .unit-label {
+            font-size: 14px;
+            color: #ff4081;
+            margin-top: 5px;
+        }
+
+        .heart-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff4081;
+            font-size: 20px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-10vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">Our Love Clock</div>
+    
+    <div class="elapsed-time">
+        <div class="clock-box">
+            <div id="years" class="clock-unit">0</div>
+            <div class="unit-label">Years</div>
+        </div>
+        <div class="clock-box">
+            <div id="months" class="clock-unit">0</div>
+            <div class="unit-label">Months</div>
+        </div>
+        <div class="clock-box">
+            <div id="days" class="clock-unit">0</div>
+            <div class="unit-label">Days</div>
+        </div>
+        <div class="clock-box">
+            <div id="hours" class="clock-unit">0</div>
+            <div class="unit-label">Hours</div>
+        </div>
+        <div class="clock-box">
+            <div id="minutes" class="clock-unit">0</div>
+            <div class="unit-label">Minutes</div>
+        </div>
+        <div class="clock-box">
+            <div id="seconds" class="clock-unit">0</div>
+            <div class="unit-label">Seconds</div>
+        </div>
+    </div>
+
+    <div class="heart-container"></div>
+
+    <script>
+        function calculateElapsedTime(startDate) {
+            const now = new Date();
+            let years = now.getFullYear() - startDate.getFullYear();
+            let months = now.getMonth() - startDate.getMonth();
+            let days = now.getDate() - startDate.getDate();
+
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+
+            if (days < 0) {
+                months--;
+                const previousMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                days += previousMonth.getDate();
+            }
+
+            return { years, months, days };
+        }
+
+        function updateClock() {
+            const startDate = new Date('2023-01-19');
+            const elapsed = calculateElapsedTime(startDate);
+            const now = new Date();
+            
+            document.getElementById('years').innerText = elapsed.years;
+            document.getElementById('months').innerText = elapsed.months;
+            document.getElementById('days').innerText = elapsed.days;
+            document.getElementById('hours').innerText = now.getHours();
+            document.getElementById('minutes').innerText = now.getMinutes();
+            document.getElementById('seconds').innerText = now.getSeconds();
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+
+            document.querySelector('.heart-container').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        setInterval(updateClock, 1000);
+        setInterval(createHeart, 300);
+
+        updateClock();
+    </script>
+
+</body>
+</html>

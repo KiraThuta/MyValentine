@@ -1,69 +1,75 @@
-
-</body>
-</html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Love Clock</title>
     <style>
+        /* --- GENERAL STYLING --- */
         body {
             font-family: Arial, sans-serif;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background-color: #ffebee;
             margin: 0;
             overflow: hidden;
             text-align: center;
             position: relative;
+            padding: 20px;
         }
-    
+
+        /* --- TITLE STYLING --- */
         .title {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: bold;
             color: #ff4081;
             margin-bottom: 20px;
             position: relative;
             z-index: 2;
         }
-    
+
+        /* --- ELAPSED TIME GRID --- */
         .elapsed-time {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns for small screens */
+            gap: 10px;
             max-width: 500px;
+            width: 100%;
             position: relative;
             z-index: 2;
         }
-    
+
+        /* --- CLOCK BOX STYLING --- */
         .clock-box {
             background: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 12px;
             box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-    
+
         .clock-box:hover {
-            transform: scale(1.1);
+            transform: scale(1.05);
             box-shadow: 4px 6px 15px rgba(0, 0, 0, 0.3);
         }
-    
+
+        /* --- CLOCK UNIT STYLING --- */
         .clock-unit {
-            font-size: 36px;
+            font-size: 28px;
             font-weight: bold;
             color: #ff4081;
         }
-    
+
         .unit-label {
-            font-size: 16px;
+            font-size: 14px;
             color: #ff4081;
             margin-top: 5px;
         }
-    
+
+        /* --- HEART ANIMATION --- */
         .heart-container {
             position: absolute;
             width: 100%;
@@ -73,7 +79,7 @@
             pointer-events: none;
             z-index: 3;
         }
-    
+
         .heart {
             position: absolute;
             color: #ff4081;
@@ -81,17 +87,18 @@
             opacity: 0.8;
             animation: fall linear infinite;
         }
-    
+
         @keyframes fall {
             0% { transform: translateY(-10vh); opacity: 1; }
             100% { transform: translateY(100vh); opacity: 0; }
         }
-    
+
+        /* --- BUTTON STYLING --- */
         .cute-button {
             width: 100%;
-            max-width: 500px;
-            padding: 14px 24px;
-            font-size: 20px;
+            max-width: 300px;
+            padding: 12px 20px;
+            font-size: 18px;
             color: white;
             background: #ff4081;
             border: none;
@@ -100,81 +107,81 @@
             transition: background 0.3s ease, transform 0.2s ease;
             position: relative;
             z-index: 2;
-            margin-top: 40px; /* Drops the button lower */
+            margin-top: 20px;
         }
-    
+
         .cute-button:hover {
             background: #e91e63;
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
-    
-        /* Media Query for iPhone 12 Mini and smaller devices */
-        @media (max-width: 375px) {
+
+        /* --- MEDIA QUERIES FOR RESPONSIVENESS --- */
+        @media (max-width: 600px) {
             .title {
                 font-size: 22px;
             }
-    
+
             .elapsed-time {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-                gap: 15px;
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for very small screens */
+                gap: 8px;
             }
-    
+
             .clock-box {
-                padding: 15px;
+                padding: 10px;
             }
-    
+
             .clock-unit {
-                font-size: 30px;
+                font-size: 24px;
             }
-    
-            .unit-label {
-                font-size: 14px;
-            }
-    
-            .cute-button {
-                padding: 12px 20px;
-                font-size: 18px;
-                max-width: 90%;
-                margin-top: 30px;
-            }
-        }
-    
-        /* Additional media query for very small screens (iPhone SE, etc.) */
-        @media (max-width: 320px) {
-            .title {
-                font-size: 20px;
-            }
-    
-            .elapsed-time {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-    
-            .clock-box {
-                padding: 12px;
-            }
-    
-            .clock-unit {
-                font-size: 28px;
-            }
-    
+
             .unit-label {
                 font-size: 12px;
             }
-    
+
             .cute-button {
-                padding: 10px 16px;
                 font-size: 16px;
+                padding: 10px 16px;
+                max-width: 90%;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .title {
+                font-size: 20px;
+            }
+
+            .elapsed-time {
+                grid-template-columns: repeat(2, 1fr); /* 2 columns for iPhone 12 Mini */
+                gap: 6px;
+            }
+
+            .clock-box {
+                padding: 8px;
+            }
+
+            .clock-unit {
+                font-size: 20px;
+            }
+
+            .unit-label {
+                font-size: 10px;
+            }
+
+            .cute-button {
+                font-size: 14px;
+                padding: 8px 12px;
             }
         }
     </style>
-    
 </head>
 <body>
+    <!-- Heart Animation Container -->
     <div class="heart-container"></div>
 
-    <div class="title"> ကိုတို့ရဲ့ချစ်သူသက်တမ်း ဒီလောက်တောင်ရှိသွားပီပဲ 💌</div>
-    
+    <!-- Title -->
+    <div class="title">ကိုတို့ရဲ့ချစ်သူသက်တမ်း ဒီလောက်တောင်ရှိသွားပီပဲ 💌</div>
+
+    <!-- Elapsed Time Grid -->
     <div class="elapsed-time">
         <div class="clock-box">
             <div id="years" class="clock-unit">0</div>
@@ -202,10 +209,10 @@
         </div>
     </div>
 
-    <button class="cute-button" onclick="location.href='message_foryou.html'">💌 စာလေးတွေဆက်ပြီးဖတ်မယ် 💌</button>
+    <!-- Button -->
+    <button class="cute-button" onclick="location.href='message_foryou.html'">စာလေးတွေဆက်ပြီးဖတ်မယ် 💌</button>
 
-
-
+    <!-- Script -->
     <script>
         function calculateElapsedTime(startDate) {
             const now = new Date();
@@ -255,6 +262,5 @@
         setInterval(createHeart, 300);
         updateClock();
     </script>
-
 </body>
 </html>

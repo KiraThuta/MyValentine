@@ -128,7 +128,7 @@
 
         <div class="pin-section">
             <h2>Enter LoveCode</h2>
-            <div class="display" id="pinDisplay">••••</div>
+            <div class="display" id="pinDisplay">••••••</div>
             <div class="keypad">
                 <button class="key" onclick="addDigit(1)">1</button>
                 <button class="key" onclick="addDigit(2)">2</button>
@@ -149,17 +149,17 @@
 
     <script>
         let pin = "";
-        const correctPin = "19123";
+        const correctPin = "190123";
 
         function addDigit(digit) {
-            if (pin.length < 5) {
+            if (pin.length < 6) {
                 pin += digit;
                 updateDisplay();
             }
         }
 
         function updateDisplay() {
-            document.getElementById("pinDisplay").innerText = pin.padEnd(5, "•");
+            document.getElementById("pinDisplay").innerText = pin.padEnd(6, "•");
             document.getElementById("errorMessage").innerText = "";
         }
 

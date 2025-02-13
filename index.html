@@ -133,30 +133,25 @@
 
         /* Falling Hearts Animation */
         .heart {
-            position: absolute;
-            top: -10vh; /* Start from above the screen */
-            color: red;
-            font-size: 20px;
-            animation: fall linear infinite;
-        }
+      position: absolute;
+      color: #ff4081;
+      font-size: 20px;
+      opacity: 0.8;
+      animation: fall linear infinite;
+    }
 
-        @keyframes fall {
-            0% {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(110vh);
-                opacity: 0;
-            }
-        }
+    @keyframes fall {
+      0% { transform: translateY(-10vh); opacity: 1; }
+      100% { transform: translateY(300vh); opacity: 0; }
+    }
+
     </style>
 </head>
 <body>
-
+    
     <!-- Valentine's Day Text -->
     <div class="valentine-text">Happy Valentine's Day My Babe 💖</div>
-
+    <div class="heart-container"></div>
     <div class="container">
         <div class="image-box">
             <img src="profile.PNG" alt="User Image">
@@ -215,21 +210,16 @@
 
         // Function to create falling hearts
         function createHeart() {
-            const heart = document.createElement("div");
-            heart.innerHTML = "❤️";
-            heart.classList.add("heart");
-            heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
-            heart.style.animationDuration = Math.random() * 2 + 3 + "s"; // Vary falling speed
-
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
-        }
-
-        // Generate hearts every 300ms
-        setInterval(createHeart, 300);
+      const heart = document.createElement('div');
+      heart.innerHTML = '💖';
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      heart.style.fontSize = (Math.random() * 15 + 10) + 'px';
+      document.querySelector('.heart-container').appendChild(heart);
+      setTimeout(() => { heart.remove(); }, 10000);
+    }
+    setInterval(createHeart, 300);
     </script>
 
 </body>
